@@ -29,20 +29,20 @@ Let $m$ be the target token, $q$ the student and $p$ the teacher. RKL splits int
 binary distribution $\tilde q_m = (q_m, 1 - q_m)$, and a **non-target** term, over the distribution $\hat q$ renormalized
 on the other tokens (Proposition 1):
 
-$$
-D_{\mathrm{KL}}(q \,\|\, p) = D_{\mathrm{KL}}(\tilde q_m \,\|\, \tilde p_m) + (1 - q_m)\, D_{\mathrm{KL}}(\hat q \,\|\, \hat p)
-$$
+```math
+D_{\mathrm{KL}}(q \parallel p) = D_{\mathrm{KL}}(\tilde q_m \parallel \tilde p_m) + (1 - q_m)\, D_{\mathrm{KL}}(\hat q \parallel \hat p)
+```
 
 The weight $(1 - q_m)$ is the problem:
 
 - **Shortcut.** The non-target loss drops when $q_m$ grows, without matching the teacher's tail, so the tail is poorly learned.
-- **Overconfidence.** Its gradient on the target logit is $-q_m (1 - q_m)\, D_{\mathrm{KL}}(\hat q \,\|\, \hat p) \le 0$ (Proposition 2), so it keeps raising $q_m$ even when $q_m = p_m$.
+- **Overconfidence.** Its gradient on the target logit is $-q_m (1 - q_m) D_{\mathrm{KL}}(\hat q \parallel \hat p) \le 0$ (Proposition 2), so it keeps raising $q_m$ even when $q_m = p_m$.
 
 **DRKL** replaces the weight with a constant $\gamma$, which removes that gradient and strengthens the tail supervision:
 
-$$
-\mathcal{L}_{\mathrm{DRKL}} = D_{\mathrm{KL}}(\tilde q_m \,\|\, \tilde p_m) + \gamma\, D_{\mathrm{KL}}(\hat q \,\|\, \hat p)
-$$
+```math
+\mathcal{L}_{\mathrm{DRKL}} = D_{\mathrm{KL}}(\tilde q_m \parallel \tilde p_m) + \gamma\, D_{\mathrm{KL}}(\hat q \parallel \hat p)
+```
 
 It is a drop-in replacement for the RKL loss ([`distillm/losses.py`](distillm/losses.py)):
 
