@@ -1,0 +1,9 @@
+torch>=2.1
+transformers>=4.51,<5
+deepspeed>=0.14
+peft>=0.15
+huggingface_hub>=0.34
+rouge-score
+nltk
+numpy
+tqdm

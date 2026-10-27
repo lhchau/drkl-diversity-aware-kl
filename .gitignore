@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.venv/
+
+# downloaded and generated artifacts
+data/
+checkpoints/
+processed_data/
+results/
